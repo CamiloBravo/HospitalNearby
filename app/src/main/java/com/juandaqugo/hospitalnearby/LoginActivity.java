@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     EditText correo, contrasena;
     Button iniciar, registrar, emergencia;
-    String nombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
+    String sangre, EPS, nombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
 //    Bitmap foto_perfil;
 
     @Override
@@ -33,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
         editor = prefs.edit();
 
-//        aux = prefs.getString("aux", "noaux");
+        sangre = prefs.getString("sangre", "nosangre");
+        EPS = prefs.getString("eps", "noeps");
         nombre = prefs.getString("nombre", "nonombre");
         documento = prefs.getString("documento", "nodocumento");
         scorreo = prefs.getString("correo", "nocorreo");
@@ -44,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if(prefs.getInt("login", -1) == 1) {
             intent = new Intent(LoginActivity.this, PerfilDrawerActivity.class);
-//            intent.putExtra("aux", aux);
+            intent.putExtra("sangre", sangre);
+            intent.putExtra("eps", EPS);
             intent.putExtra("nombre", nombre);
             intent.putExtra("documento", documento);
             intent.putExtra("correo", scorreo);
@@ -81,7 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putInt("login",1);
                     editor.commit();
                     intent = new Intent(LoginActivity.this, PerfilDrawerActivity.class);
-//                    intent.putExtra("aux", aux);
+                    intent.putExtra("sangre", sangre);
+                    intent.putExtra("eps", EPS);
                     intent.putExtra("nombre", nombre);
                     intent.putExtra("documento", documento);
                     intent.putExtra("correo", scorreo);
@@ -102,7 +105,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1234 && resultCode==RESULT_OK){
 
-//            aux = data.getExtras().getString("aux");
+            sangre = data.getExtras().getString("sangre");
+            EPS = data.getExtras().getString("eps");
             nombre = data.getExtras().getString("nombre");
             documento = data.getExtras().getString("documento");
             scorreo = data.getExtras().getString("correo");
@@ -111,7 +115,8 @@ public class LoginActivity extends AppCompatActivity {
             enfermedad = data.getExtras().getString("enfermedades");
             t_acudiente = data.getExtras().getString("tacudiente");
 
-//            editor.putString("aux", aux);
+            editor.putString("sangre", sangre);
+            editor.putString("eps", sangre);
             editor.putString("nombre", nombre);
             editor.putString("documento", documento);
             editor.putString("correo", scorreo);

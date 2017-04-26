@@ -21,8 +21,8 @@ import android.widget.TextView;
 public class PerfilDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Intent intent;
-    TextView tnombre_perfil, tsangre_perfil, tcorreo_perfil;
-    String aux, snombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
+    TextView tnombre_perfil, tcorreo_perfil, tsangre_perfil, teps_perfil, tcedula_perfil;
+    String sangre, EPS, snombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
     ImageView iusuario;
 //    Bitmap imageBitmap;
     SharedPreferences prefs;
@@ -37,7 +37,8 @@ public class PerfilDrawerActivity extends AppCompatActivity
 
         Bundle extras = getIntent().getExtras();
 
-        aux = extras.getString("aux");
+        sangre = extras.getString("sangre");
+        EPS = extras.getString("eps");
         snombre = extras.getString("nombre");
         documento = extras.getString("documento");
         scorreo = extras.getString("correo");
@@ -56,9 +57,13 @@ public class PerfilDrawerActivity extends AppCompatActivity
         tnombre_perfil = (TextView) findViewById(R.id.tnombre_perfil);
         tsangre_perfil = (TextView) findViewById(R.id.tsangre_perfil);
         tcorreo_perfil = (TextView) findViewById(R.id.tcorreo_perfil);
+        tcedula_perfil = (TextView) findViewById(R.id.tcedula_perfil);
+        teps_perfil = (TextView) findViewById(R.id.tEPS_perfil);
         tnombre_perfil.setText(snombre);
-        tsangre_perfil.setText(aux);
+        tsangre_perfil.setText(sangre);
         tcorreo_perfil.setText(scorreo);
+        tcedula_perfil.setText(documento);
+        teps_perfil.setText(EPS);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

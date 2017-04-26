@@ -44,7 +44,7 @@ public class RegistroActivity extends AppCompatActivity {
     EditText acudiente, t_acudiente;
     Button enviar, cancelar;
     RadioButton masculino, femenino;
-    String aux;
+    String sangre, EPS;
     Spinner ListaDesple, ListaDesple2;
     String[] items, items2;
 //    String mCurrentPhotoPath;
@@ -81,6 +81,9 @@ public class RegistroActivity extends AppCompatActivity {
             }
         });
 
+        sangre = ListaDesple.getSelectedItem().toString();
+        EPS = ListaDesple2.getSelectedItem().toString();
+
         nombre = (EditText) findViewById(R.id.enombre);
         documento = (EditText) findViewById(R.id.edocumento);
         telefono = (EditText) findViewById(R.id.etelefono);
@@ -111,7 +114,8 @@ public class RegistroActivity extends AppCompatActivity {
                     setResult(RESULT_CANCELED, intent);
                 }else {
 
-//                    intent.putExtra("aux", aux);
+                    intent.putExtra("sangre", sangre);
+                    intent.putExtra("eps", EPS);
                     intent.putExtra("nombre", nombre.getText().toString());
                     intent.putExtra("documento", documento.getText().toString());
                     intent.putExtra("correo", correo.getText().toString());
