@@ -15,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class PerfilDrawerActivity extends AppCompatActivity
@@ -23,6 +25,8 @@ public class PerfilDrawerActivity extends AppCompatActivity
     Intent intent;
     TextView tnombre_perfil, tcorreo_perfil, tsangre_perfil, teps_perfil, tcedula_perfil;
     String sangre, EPS, snombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
+    Spinner ListaSaludcoop;
+    String[] items;
     ImageView iusuario;
 //    Bitmap imageBitmap;
     SharedPreferences prefs;
@@ -34,6 +38,12 @@ public class PerfilDrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_perfil_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ListaSaludcoop = (Spinner) findViewById(R.id.ListaSaludcoop);
+        items = getResources().getStringArray(R.array.HospitalesSaludCoop);
+        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,items);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        ListaSaludcoop.setAdapter(adaptador);
 
         Bundle extras = getIntent().getExtras();
 
