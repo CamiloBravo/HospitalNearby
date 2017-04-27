@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class PerfilDrawerActivity extends AppCompatActivity
     String sangre, EPS, snombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
     Spinner ListaSaludcoop;
     String[] items;
+    Button binfomapa;
     ImageView iusuario;
 //    Bitmap imageBitmap;
     SharedPreferences prefs;
@@ -64,6 +66,8 @@ public class PerfilDrawerActivity extends AppCompatActivity
         prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
         editor = prefs.edit();
 
+
+        binfomapa = (Button) findViewById(R.id.binfomapa);
         tnombre_perfil = (TextView) findViewById(R.id.tnombre_perfil);
         tsangre_perfil = (TextView) findViewById(R.id.tsangre_perfil);
         tcorreo_perfil = (TextView) findViewById(R.id.tcorreo_perfil);
@@ -74,6 +78,18 @@ public class PerfilDrawerActivity extends AppCompatActivity
         tcorreo_perfil.setText(scorreo);
         tcedula_perfil.setText(documento);
         teps_perfil.setText(EPS);
+
+        binfomapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PerfilDrawerActivity.this, Registro2Activity.class);
+                intent.putExtra("nombre", snombre);
+                intent.putExtra("documento", documento);
+                intent.putExtra("eps", EPS);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
