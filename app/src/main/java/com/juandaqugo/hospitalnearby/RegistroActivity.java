@@ -33,6 +33,9 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,13 +43,16 @@ import java.util.Date;
 
 
 public class RegistroActivity extends AppCompatActivity {
-    EditText nombre, documento, telefono, contrasena, r_contrasena, alergia, enfermedad, correo;
-    EditText acudiente, t_acudiente;
+    EditText enombre, edocumento, etelefono, econtrasena, er_contrasena, ealergias, eenfermedad, ecorreo;
+    EditText eacudiente, etelacudiente;
     Button enviar, cancelar;
     RadioButton masculino, femenino;
-    String sangre, EPS;
+    String sangre, EPS, sexo, nombre, documento, telefono, alergias, enfermedad, correo, acudiente, telacudiente;
     Spinner ListaDesple, ListaDesple2;
     String[] items, items2;
+    FirebaseDatabase databaseUsuarios;
+    DatabaseReference myRef;
+    Usuarios usuarios;
 //    String mCurrentPhotoPath;
 //
     Button bfoto;
@@ -84,16 +90,16 @@ public class RegistroActivity extends AppCompatActivity {
         sangre = ListaDesple.getSelectedItem().toString();
         EPS = ListaDesple2.getSelectedItem().toString();
 
-        nombre = (EditText) findViewById(R.id.enombre);
-        documento = (EditText) findViewById(R.id.edocumento);
-        telefono = (EditText) findViewById(R.id.etelefono);
-        correo = (EditText) findViewById(R.id.ecorreo);
-        contrasena = (EditText) findViewById(R.id.econtrasenar);
-        r_contrasena = (EditText) findViewById(R.id.econtrasenarep);
-        alergia = (EditText) findViewById(R.id.ealergias);
-        enfermedad = (EditText) findViewById(R.id.eenfermedades);
-        acudiente = (EditText) findViewById(R.id.enombre_acudiente);
-        t_acudiente = (EditText) findViewById(R.id.etelefono_acudiente);
+        enombre = (EditText) findViewById(R.id.enombre);
+        edocumento = (EditText) findViewById(R.id.edocumento);
+        etelefono = (EditText) findViewById(R.id.etelefono);
+        ecorreo = (EditText) findViewById(R.id.ecorreo);
+        econtrasena = (EditText) findViewById(R.id.econtrasenar);
+        er_contrasena = (EditText) findViewById(R.id.econtrasenarep);
+        ealergias = (EditText) findViewById(R.id.ealergias);
+        eenfermedad = (EditText) findViewById(R.id.eenfermedades);
+        eacudiente = (EditText) findViewById(R.id.enombre_acudiente);
+        etelacudiente = (EditText) findViewById(R.id.etelefono_acudiente);
         enviar = (Button) findViewById(R.id.benviar);
         cancelar  = (Button) findViewById(R.id.bcancelar);
         masculino = (RadioButton) findViewById(R.id.rmasculino);
@@ -103,26 +109,51 @@ public class RegistroActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                 Intent intent = new Intent();
-                if(nombre.getText().toString().equals("") || documento.getText().toString().equals("") ||
-                        telefono.getText().toString().equals("") || contrasena.getText().toString().equals("") ||
-                        r_contrasena.getText().toString().equals("") || correo.getText().toString().equals("") ||
-                        t_acudiente.getText().toString().equals("") ){
-                    Toast.makeText(getApplicationContext(),"Llene los campos requeridos",Toast.LENGTH_SHORT).show();
+                databaseUsuarios = FirebaseDatabase.getInstance();
+
+                documento = edocumento.getText().toString();
+                nombre = enombre.getText().toString();
+                telefono = etelefono.getText().toString();
+                correo = ecorreo.getText().toString();
+                alergias = ealergias.getText().toString();
+                enfermedad = eenfermedad.getText().toString();
+                acudiente = eacudiente.getText().toString();
+                telacudiente = etelacudiente.getText().toString();
+
+                myRef = databaseUsuarios.getReference("Contactos").child(String.valueOf(documento));
+                usuarios = new Usuarios(String.valueOf(documento),nombre, sexo, sangre, telefono, correo, EPS, alergias, enfermedad, acudiente, telacudiente);
+                myRef.setValue(usuarios);
+
+                if(enombre.getText().toString().equals("") || edocumento.getText().toString().equals("") ||
+                        etelefono.getText().toString().equals("") || econtrasena.getText().toString().equals("") ||
+                        er_contrasena.getText().toString().equals("") || ecorreo.getText().toString().equals("") ||
+                        eenfermedad.getText().toString().equals("") || eacudiente.getText().toString().equals("") ||
+                        sangre.equals("") || EPS.equals("") ||
+                        ealergias.getText().toString().equals("") || etelacudiente.getText().toString().equals("") ){
+                    Toast.makeText(getApplicationContext(),"Llene todos los campos",Toast.LENGTH_SHORT).show();
                     setResult(RESULT_CANCELED, intent);
-                } else if(!(contrasena.getText().toString().equals(r_contrasena.getText().toString()))){
+                } else if(!(econtrasena.getText().toString().equals(er_contrasena.getText().toString()))){
                     Toast.makeText(getApplicationContext(),"La contraseña no coincide",Toast.LENGTH_SHORT).show();
                     setResult(RESULT_CANCELED, intent);
                 }else {
+                    if(masculino.isChecked()){
+                        sexo="Masculino";
+                    }else if(femenino.isChecked()){
+                        sexo="Femenino";
+                    }
 
+                    intent.putExtra("sexo", sexo);
                     intent.putExtra("sangre", sangre);
                     intent.putExtra("eps", EPS);
-                    intent.putExtra("nombre", nombre.getText().toString());
-                    intent.putExtra("documento", documento.getText().toString());
-                    intent.putExtra("correo", correo.getText().toString());
-                    intent.putExtra("contrasena", contrasena.getText().toString());
-                    intent.putExtra("alergias", alergia.getText().toString());
-                    intent.putExtra("enfermedades", enfermedad.getText().toString());
-                    intent.putExtra("tacudiente", t_acudiente.getText().toString());
+                    intent.putExtra("nombre", enombre.getText().toString());
+                    intent.putExtra("documento", edocumento.getText().toString());
+                    intent.putExtra("correo", ecorreo.getText().toString());
+                    intent.putExtra("contrasena", econtrasena.getText().toString());
+                    intent.putExtra("alergias", ealergias.getText().toString());
+                    intent.putExtra("enfermedades", eenfermedad.getText().toString());
+                    intent.putExtra("telacudiente", etelacudiente.getText().toString());
+
+
 
                     setResult(RESULT_OK, intent);
                     finish();
@@ -139,29 +170,6 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
-//    private void llamarIntent() {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        // Ensure that there's a camera activity to handle the intent
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            // Create the File where the photo should go
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException ex) {
-//                // Error occurred while creating the File
-//
-//            }
-//            // Continue only if the File was successfully created
-//            if (photoFile != null) {
-//                Uri photoURI = FileProvider.getUriForFile(this,
-//                        "com.example.android.fileprovider",
-//                        photoFile);
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-//            }
-//        }
-//    }
-
     private void llamarIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -169,30 +177,12 @@ public class RegistroActivity extends AppCompatActivity {
         }
     }
 
-//    private File createImageFile() throws IOException {
-//        // Create an image file name
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File image = File.createTempFile(
-//                imageFileName,  /* prefix */
-//                ".jpg",         /* suffix */
-//                storageDir      /* directory */
-//        );
-//
-//        // Save a file: path for use with ACTION_VIEW intents
-//        mCurrentPhotoPath = image.getAbsolutePath();
-//        return image;
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imagenfoto.setImageBitmap(imageBitmap);
-//            Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
-//            intent.putExtra("data", imageBitmap);
         }
     }
 }

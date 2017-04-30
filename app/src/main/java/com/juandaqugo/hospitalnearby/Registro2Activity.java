@@ -8,7 +8,7 @@ import android.widget.TextView;
 public class Registro2Activity extends AppCompatActivity {
 
     TextView tnombre_perfil2, tdocumento_perfil2, tsangre_perfil2, tsexo_perfil2;
-    String snombre, sdocumento, ssangre, seps;
+    String snombre, sdocumento, ssangre, sexo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +20,16 @@ public class Registro2Activity extends AppCompatActivity {
         snombre = extras.getString("nombre");
         sdocumento = extras.getString("documento");
         ssangre = extras.getString("sangre");
-        seps = extras.getString("eps");
+        sexo = extras.getString("sexo");
 
         tnombre_perfil2 = (TextView) findViewById(R.id.tnombre2);
         tdocumento_perfil2 = (TextView) findViewById(R.id.tdocumento2);
-//        tsexo_perfil2 = (TextView) findViewById(R.id.tSexo2);
+        tsexo_perfil2 = (TextView) findViewById(R.id.tSexo2);
         tsangre_perfil2 = (TextView) findViewById(R.id.tSangre2);
         tnombre_perfil2.setText(snombre);
         tdocumento_perfil2.setText(sdocumento);
-//        tsexo_perfil2.setText(snombre);
-        tsangre_perfil2.setText(seps);
+        tsexo_perfil2.setText(sexo);
+        tsangre_perfil2.setText(ssangre);
 
     }
 }

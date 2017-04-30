@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="390dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/white"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="390dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/white"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="390dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/white"

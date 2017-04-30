@@ -1,5 +1,6 @@
 package com.juandaqugo.hospitalnearby;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class SanVicenteDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Button bhospmapa;
+    String sangre, snombre, documento, sexo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +28,27 @@ public class SanVicenteDrawerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Bundle extras = getIntent().getExtras();
+
+        sexo = extras.getString("sexo");
+        sangre = extras.getString("sangre");
+        snombre = extras.getString("nombre");
+        documento = extras.getString("documento");
+
+        bhospmapa = (Button) findViewById(R.id.bhospmapa);
+        bhospmapa.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Intent intent = new Intent(SanVicenteDrawerActivity.this, Maps1Activity.class);
+                intent.putExtra("nombre", snombre);
+                intent.putExtra("documento", documento);
+                intent.putExtra("sangre", sangre);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                finish();
             }
         });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,7 +99,12 @@ public class SanVicenteDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent intent = new Intent(SanVicenteDrawerActivity.this, PerfilDrawerActivity.class);
+            intent.putExtra("nombre", snombre);
+            intent.putExtra("documento", documento);
+            intent.putExtra("sangre", sangre);
+            intent.putExtra("sexo", sexo);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

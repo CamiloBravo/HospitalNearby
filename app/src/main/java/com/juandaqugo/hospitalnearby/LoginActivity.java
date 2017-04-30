@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     EditText correo, contrasena;
     Button iniciar, registrar, emergencia;
-    String sangre, EPS, nombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
+    String sangre, EPS, nombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente, sexo;
 //    Bitmap foto_perfil;
 
     @Override
@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
         editor = prefs.edit();
 
+        sexo = prefs.getString("sexo", "nosexo");
         sangre = prefs.getString("sangre", "nosangre");
         EPS = prefs.getString("eps", "noeps");
         nombre = prefs.getString("nombre", "nonombre");
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(prefs.getInt("login", -1) == 1) {
             intent = new Intent(LoginActivity.this, PerfilDrawerActivity.class);
+            intent.putExtra("sexo", sexo);
             intent.putExtra("sangre", sangre);
             intent.putExtra("eps", EPS);
             intent.putExtra("nombre", nombre);
@@ -84,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                     intent = new Intent(LoginActivity.this, PerfilDrawerActivity.class);
                     intent.putExtra("sangre", sangre);
+                    intent.putExtra("sexo", sexo);
                     intent.putExtra("eps", EPS);
                     intent.putExtra("nombre", nombre);
                     intent.putExtra("documento", documento);
@@ -105,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1234 && resultCode==RESULT_OK){
 
+            sexo = data.getExtras().getString("sexo");
             sangre = data.getExtras().getString("sangre");
             EPS = data.getExtras().getString("eps");
             nombre = data.getExtras().getString("nombre");
@@ -115,8 +119,9 @@ public class LoginActivity extends AppCompatActivity {
             enfermedad = data.getExtras().getString("enfermedades");
             t_acudiente = data.getExtras().getString("tacudiente");
 
+            editor.putString("sexo", sexo);
             editor.putString("sangre", sangre);
-            editor.putString("eps", sangre);
+            editor.putString("eps", EPS);
             editor.putString("nombre", nombre);
             editor.putString("documento", documento);
             editor.putString("correo", scorreo);

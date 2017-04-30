@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,10 +26,11 @@ public class PerfilDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Intent intent;
     TextView tnombre_perfil, tcorreo_perfil, tsangre_perfil, teps_perfil, tcedula_perfil;
-    String sangre, EPS, snombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente;
+    String sangre, EPS, snombre, documento, scorreo, scontrasena, alergia, enfermedad, t_acudiente, sexo;
     Spinner ListaSaludcoop;
+    RadioButton rMas, rFem;
     String[] items;
-    Button binfomapa;
+    Button binfomapa, binfohosp;
     ImageView iusuario;
 //    Bitmap imageBitmap;
     SharedPreferences prefs;
@@ -49,6 +51,7 @@ public class PerfilDrawerActivity extends AppCompatActivity
 
         Bundle extras = getIntent().getExtras();
 
+        sexo = extras.getString("sexo");
         sangre = extras.getString("sangre");
         EPS = extras.getString("eps");
         snombre = extras.getString("nombre");
@@ -68,6 +71,7 @@ public class PerfilDrawerActivity extends AppCompatActivity
 
 
         binfomapa = (Button) findViewById(R.id.binfomapa);
+        binfohosp = (Button) findViewById(R.id.binfohospi);
         tnombre_perfil = (TextView) findViewById(R.id.tnombre_perfil);
         tsangre_perfil = (TextView) findViewById(R.id.tsangre_perfil);
         tcorreo_perfil = (TextView) findViewById(R.id.tcorreo_perfil);
@@ -82,10 +86,24 @@ public class PerfilDrawerActivity extends AppCompatActivity
         binfomapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PerfilDrawerActivity.this, Registro2Activity.class);
+                Intent intent = new Intent(PerfilDrawerActivity.this, Maps1Activity.class);
                 intent.putExtra("nombre", snombre);
                 intent.putExtra("documento", documento);
-                intent.putExtra("eps", EPS);
+                intent.putExtra("sangre", sangre);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        binfohosp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PerfilDrawerActivity.this, SanVicenteDrawerActivity.class);
+                intent.putExtra("nombre", snombre);
+                intent.putExtra("documento", documento);
+                intent.putExtra("sangre", sangre);
+                intent.putExtra("sexo", sexo);
                 startActivity(intent);
                 finish();
             }
@@ -149,10 +167,27 @@ public class PerfilDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.accidente) {
-            // Handle the camera action
+            Intent intent = new Intent(PerfilDrawerActivity.this, Maps1Activity.class);
+            intent.putExtra("nombre", snombre);
+            intent.putExtra("documento", documento);
+            intent.putExtra("sangre", sangre);
+            intent.putExtra("sexo", sexo);
+            startActivity(intent);
         } else if (id == R.id.quemaduras) {
+            Intent intent = new Intent(PerfilDrawerActivity.this, Maps1Activity.class);
+            intent.putExtra("nombre", snombre);
+            intent.putExtra("documento", documento);
+            intent.putExtra("sangre", sangre);
+            intent.putExtra("sexo", sexo);
+            startActivity(intent);
 
         } else if (id == R.id.infecciones) {
+            Intent intent = new Intent(PerfilDrawerActivity.this, Maps1Activity.class);
+            intent.putExtra("nombre", snombre);
+            intent.putExtra("documento", documento);
+            intent.putExtra("sangre", sangre);
+            intent.putExtra("sexo", sexo);
+            startActivity(intent);
 
         } else if (id == R.id.alergias) {
 
@@ -171,6 +206,13 @@ public class PerfilDrawerActivity extends AppCompatActivity
         } else if (id == R.id.piel) {
 
         } else if (id == R.id.cambiar_datos) {
+            Intent intent = new Intent(PerfilDrawerActivity.this, Registro2Activity.class);
+            intent.putExtra("nombre", snombre);
+            intent.putExtra("documento", documento);
+            intent.putExtra("sangre", sangre);
+            intent.putExtra("sexo", sexo);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.cerrar) {
             editor.putInt("login",-1);
