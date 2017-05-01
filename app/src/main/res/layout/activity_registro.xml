@@ -244,7 +244,7 @@
                 android:background="@drawable/boton_redon"
                 android:text="@string/enviar"
                 android:layout_marginRight="10dp"
-                android:id="@+id/benviar"/>
+                android:id="@+id/benviar" />
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -253,7 +253,7 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:background="@drawable/boton_redon"
-                android:id="@+id/bcancelar"/>
+                android:id="@+id/bcancelar" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

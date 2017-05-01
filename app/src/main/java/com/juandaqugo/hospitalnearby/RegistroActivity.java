@@ -50,11 +50,11 @@ public class RegistroActivity extends AppCompatActivity {
     String sangre, EPS, sexo, nombre, documento, telefono, alergias, enfermedad, correo, acudiente, telacudiente;
     Spinner ListaDesple, ListaDesple2;
     String[] items, items2;
-    FirebaseDatabase databaseUsuarios;
+    FirebaseDatabase database;
     DatabaseReference myRef;
-    Usuarios usuarios;
-//    String mCurrentPhotoPath;
-//
+//    Usuarios usuarios;
+    Contactos contactos;
+
     Button bfoto;
     ImageView imagenfoto;
 
@@ -109,7 +109,7 @@ public class RegistroActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                 Intent intent = new Intent();
-                databaseUsuarios = FirebaseDatabase.getInstance();
+//                database = FirebaseDatabase.getInstance();
 
                 documento = edocumento.getText().toString();
                 nombre = enombre.getText().toString();
@@ -120,9 +120,9 @@ public class RegistroActivity extends AppCompatActivity {
                 acudiente = eacudiente.getText().toString();
                 telacudiente = etelacudiente.getText().toString();
 
-                myRef = databaseUsuarios.getReference("Contactos").child(String.valueOf(documento));
-                usuarios = new Usuarios(String.valueOf(documento),nombre, sexo, sangre, telefono, correo, EPS, alergias, enfermedad, acudiente, telacudiente);
-                myRef.setValue(usuarios);
+//                myRef = database.getReference("Contactos").child(String.valueOf(documento));
+//                contactos = new Contactos(String.valueOf(documento),nombre);
+//                myRef.setValue(contactos);
 
                 if(enombre.getText().toString().equals("") || edocumento.getText().toString().equals("") ||
                         etelefono.getText().toString().equals("") || econtrasena.getText().toString().equals("") ||
@@ -169,6 +169,36 @@ public class RegistroActivity extends AppCompatActivity {
             }
         });
     }
+
+//    public void onClick(View view) {
+////        Intent intent = new Intent();
+//        int idB = view.getId();
+//                database = FirebaseDatabase.getInstance();
+//
+//                documento = edocumento.getText().toString();
+//                nombre = enombre.getText().toString();
+////                telefono = etelefono.getText().toString();
+////                correo = ecorreo.getText().toString();
+////                alergias = ealergias.getText().toString();
+////                enfermedad = eenfermedad.getText().toString();
+////                acudiente = eacudiente.getText().toString();
+////                telacudiente = etelacudiente.getText().toString();
+//
+//
+//
+//
+//                switch (idB) {
+//                    case R.id.benviar:
+//                        myRef = database.getReference("Contactos").child(String.valueOf(documento));
+//                        contactos = new Contactos(String.valueOf(documento), nombre);
+//                        myRef.setValue(contactos);
+//                        break;
+//
+//                }
+//
+//
+//
+//    }
 
     private void llamarIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
